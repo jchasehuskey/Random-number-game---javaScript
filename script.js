@@ -21,11 +21,11 @@
 //   console.log(document.querySelector('.guess').value);
 // });
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 //trunc (above^^) removes decimals.  Added 1 to include 20, as naturally the program would stop at 19
-document.querySelector('.number').textContent = secretNumber;
 
 let score = 20;
+let highScore = 0;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
@@ -38,12 +38,17 @@ document.querySelector('.check').addEventListener('click', function () {
     //when player wins
   } else if (guess === secretNumber) {
     document.querySelector('.message').textContent = 'You guessed the number!';
+    document.querySelector('.number').textContent = secretNumber;
 
     document.querySelector('body').style.backgroundColor = '#69db7c';
-
     document.querySelector('.number').style.width = '30rem';
     let number = document.querySelector('.number');
     number.style.color = 'purple';
+
+    if (score > highScore) {
+      highScore = score;
+      document.querySelector('.highscore').textContent = highScore;
+    }
     // number.style.backgroundColor = 'black';
 
     //when guess is too high
@@ -74,4 +79,16 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.score').textContent = 0;
     }
   }
+});
+
+document.querySelector('.again').addEventListener('click', function () {
+  score = 20;
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+
+  document.querySelector('.message').textContent = 'Start guessing..';
+  document.querySelector('.score').textContent = score;
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.guess').value = '';
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
 });
